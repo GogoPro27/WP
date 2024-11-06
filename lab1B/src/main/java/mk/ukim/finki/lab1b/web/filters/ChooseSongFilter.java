@@ -22,8 +22,6 @@ public class ChooseSongFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        String path = request.getServletPath();
-
         if(request.getParameter("trackId")!=null)
             filterChain.doFilter(servletRequest,servletResponse);
         else
