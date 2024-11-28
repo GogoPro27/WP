@@ -5,10 +5,6 @@
   <meta charset="utf-8">
   <title>Songs Homepage - Welcome to My Music Store</title>
   <style type="text/css">
-    /*body {*/
-    /*  width: 800px;*/
-    /*  margin: auto;*/
-    /*}*/
     body {
       display: flex;
       flex-direction: column;
@@ -20,25 +16,20 @@
       padding: 20px;
     }
 
-    header, main, section, aside {
-      text-align: center;
-    }
-
-    h1, h2 {
-      color: #336699;
+    .flex {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      padding: 20px;
     }
 
     form, ul, table {
-      width: 80%;
-      margin: auto;
+      width: 45%;
+      margin: 10px;
       text-align: left;
     }
 
-    input[type="radio"] {
-      margin-right: 10px;
-    }
-
-    input[type="submit"], .back-button {
+    input[type="submit"], .button {
       background-color: #336699;
       color: white;
       border: none;
@@ -49,31 +40,82 @@
       text-align: center;
     }
 
-    input[type="submit"]:hover, .back-button:hover {
+    input[type="submit"]:hover, .button:hover {
       background-color: #285280;
+    }
+
+    .delete-button {
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 3px;
+      margin-right: 5px;
+    }
+
+    .delete-button:hover {
+      background-color: #a71d2a;
+    }
+
+    .edit-button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+
+    .edit-button:hover {
+      background-color: #0056b3;
+    }
+
+    .center-button {
+      text-align: center;
+      margin-top: 30px;
+    }
+    body > main > div.flex > form:nth-child(2) > div{
+      margin-bottom: 10px;
     }
   </style>
 </head>
 <body>
 <header>
   <h1>Welcome to My Music Store</h1>
+  <div th:if="${error}" style="color: red; font-weight: bold; margin-top: 10px;">
+    <span th:text="${error}"></span>
+  </div>
 </header>
 <main>
   <h2>Choose a song:</h2>
-  <!-- Display radio buttons for each song,
-          the value should be the trackId
-          and the displayed text should be Title: <songTitle>, Genre:<genre>, Release Year: <releaseYear> -->
-<!--  <input type="radio" name="trackId" value="1"> Song 1 <br/>-->
-<!--  <input type="radio" name="trackId" value="2"> Song 2<br/>-->
-<!--  <input type="radio" name="trackId" value="3"> Song 3 <br/>-->
-<!--  <input type='submit' value='Submit'>-->
-  <form action="/artist" method="post" >
-    <div th:each="song : ${songs}">
-      <input type="radio" name="trackId" th:value="${song.trackId}"
-             th:text="'Title: ' + ${song.title} + ', Genre: ' + ${song.genre} + ', Release Year: ' + ${song.releaseYear}" required/> <br/>
-    </div>
-    <input type="submit" value="Submit">
-  </form>
+  <div class="flex">
+    <!-- Existing Form -->
+    <form action="/artists/add-to-song" method="get">
+      <div th:each="song : ${songs}">
+        <input type="radio" name="songId" th:value="${song.id}" required />
+        <a th:href="'/songs/details/' + ${song.id}" th:text="${song.title}"></a>
+        , Album: <span style="color: #dc3545" th:text="${song.album.name}"></span>
+        , Genre: <span th:text="${song.genre}"></span>
+        , Release Year: <span th:text="${song.releaseYear}"></span>
+        <br/>
+      </div>
+      <input type="submit" value="Submit">
+    </form>
+
+    <!-- New Form for Delete and Edit -->
+    <form>
+      <div th:each="song : ${songs}">
+        <button th:formaction="'/songs/delete/' + ${song.id}" class="delete-button" method="post">Delete</button>
+        <button th:formaction="'/songs/edit/' + ${song.id}" class="edit-button" method="get">Edit</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Add New Song Button -->
+  <div class="center-button">
+    <a href="/songs/add-form" method="get" class="button">Add New Song</a>
+  </div>
 </main>
 </body>
 </html>

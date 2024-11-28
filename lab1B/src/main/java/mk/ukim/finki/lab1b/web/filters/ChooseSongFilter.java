@@ -22,7 +22,7 @@ public class ChooseSongFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        if(request.getParameter("trackId")!=null)
+        if(request.getParameter("songId")!=null)
             filterChain.doFilter(servletRequest,servletResponse);
         else
             response.sendRedirect("/listSongs");

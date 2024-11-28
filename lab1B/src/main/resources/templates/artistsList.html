@@ -77,13 +77,13 @@
 </header>
 <section>
   <h2>Select artist:</h2>
-  <form action="/listSongs" method="post">
+  <form action="/artists/add-to-song" method="post">
     <div th:each="artist : ${artists}">
       <input type="radio" name="artistId" th:value="${artist.id}"
              th:text="${artist.firstName} + ' ' + ${artist.lastName}" required/> <br/>
     </div>
 
-    <input type="hidden" name="trackId" th:value="${trackId}" />
+    <input type="hidden" name="songId" th:value="${songId}" />
 
     <br/>
     <input type="submit" value="Add artist">
@@ -92,9 +92,9 @@
 <aside>
   <table>
     <tr>
-      <td><b>Track Id</b></td>
-      <!-- Displaying the trackId value -->
-      <td th:text="${trackId}"></td>
+      <td><b>Song Id</b></td>
+      <!-- Displaying the songId value -->
+      <td th:text="${songId}"></td>
     </tr>
   </table>
 </aside>
