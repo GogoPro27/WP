@@ -16,18 +16,18 @@ import java.util.Optional;
 public class SongController {
     private final SongService songService;
     private final AlbumService albumService;
-    private final ArtistService artistService;
 
-    public SongController(SongService songService, AlbumService albumService, ArtistService artistService) {
+    public SongController(SongService songService, AlbumService albumService) {
         this.songService = songService;
         this.albumService = albumService;
-        this.artistService = artistService;
     }
 
     @GetMapping
-    public String getSongsPage(@RequestParam(required = false) String error, Model model){
-        model.addAttribute("songs",songService.listSongs());
+    public String getSongsPage(@RequestParam(required = false) String error,@RequestParam(required = false) Long albumId, Model model){
+        if(albumId!=null && albumId!=-1) model.addAttribute("songs",songService.listSongsByAlbum(albumId));
+        else model.addAttribute("songs",songService.listSongs());
         model.addAttribute("error",error);
+        model.addAttribute("albums",albumService.findAll());
         return "listSongs";
     }
 
@@ -51,9 +51,6 @@ public class SongController {
 
     @GetMapping("/edit/{songId}")
     public String editSong(@PathVariable Long songId,Model model){
-
-
-
         Optional<Song> songToEdit = songService.findById(songId);
 
         if(songToEdit.isEmpty()) return "redirect:/songs?error=choose a valid song to edit";

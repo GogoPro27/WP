@@ -1,9 +1,6 @@
 package mk.ukim.finki.lab1b.web.controllers;
 
 import mk.ukim.finki.lab1b.model.Artist;
-import mk.ukim.finki.lab1b.model.Song;
-import mk.ukim.finki.lab1b.repository.ArtistRepository;
-import mk.ukim.finki.lab1b.repository.SongRepository;
 import mk.ukim.finki.lab1b.service.ArtistService;
 import mk.ukim.finki.lab1b.service.SongService;
 import org.springframework.stereotype.Controller;

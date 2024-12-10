@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public interface SongService{
     List<Song> listSongs();
+    List<Song> listSongsByAlbum(Long albumId);
     void findAndAddArtistToSong(Long artistId, Long songId);
     Optional<Song> findByTrackId(String trackId);
     Optional<Song> findById(long id);

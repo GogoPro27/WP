@@ -75,7 +75,12 @@
       text-align: center;
       margin-top: 30px;
     }
-    body > main > div.flex > form:nth-child(2) > div{
+
+    .album-select-container {
+      margin-bottom: 20px;
+    }
+
+    body > main > div.flex > form:nth-child(2) > div {
       margin-bottom: 10px;
     }
   </style>
@@ -89,6 +94,16 @@
 </header>
 <main>
   <h2>Choose a song:</h2>
+
+  <!-- Album Selection Dropdown -->
+  <div class="album-select-container">
+    <label for="albumSelect">Filter by Album:</label>
+    <select id="albumSelect" onchange="filterByAlbum()">
+      <option value="-1">All</option>
+      <option th:each="album : ${albums}" th:value="${album.id}" th:text="${album.name}"></option>
+    </select>
+  </div>
+
   <div class="flex">
     <!-- Existing Form -->
     <form action="/artists/add-to-song" method="get">
@@ -117,5 +132,12 @@
     <a href="/songs/add-form" method="get" class="button">Add New Song</a>
   </div>
 </main>
+
+<script>
+  function filterByAlbum() {
+    const selectedAlbumId = document.getElementById('albumSelect').value;
+    window.location.href = `/songs?albumId=${selectedAlbumId}`;
+  }
+</script>
 </body>
 </html>

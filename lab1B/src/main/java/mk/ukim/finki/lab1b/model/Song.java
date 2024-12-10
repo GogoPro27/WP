@@ -1,5 +1,6 @@
 package mk.ukim.finki.lab1b.model;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -8,23 +9,28 @@ import java.util.Random;
 
 @AllArgsConstructor
 @Data
+@Entity
 public class Song {
     private String trackId;
     private String title;
     private String genre;
     private int releaseYear;
+    @ManyToMany
     private List<Artist> performers;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @ManyToOne
     private Album album;
-    public Song(String trackId, String title, String genre, int releaseYear, List<Artist> performers) {
+    public Song(String trackId, String title, String genre, int releaseYear) {
         this.trackId = trackId;
         this.title = title;
         this.genre = genre;
         this.releaseYear = releaseYear;
-        this.performers = performers;
-        Random random = new Random();
-        id = random.nextLong(1000);
         album = null;
-        System.out.printf("Song with id: %d has been generated, song name - %s%n",id,title);
+    }
+
+    public Song() {
+
     }
 }
